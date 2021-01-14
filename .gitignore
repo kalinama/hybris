@@ -4,4 +4,5 @@
 /bin/*
 !/bin/custom
 /roles
+/data
 # Hybris123SnippetEnd
