@@ -1,7 +1,13 @@
-# Hybris123SnippetStart hybris123gitignore
 /log
 /temp
-/bin/
+/bin/*
 !/bin/custom
 /roles
-# Hybris123SnippetEnd
+
+/config/backup
+/config/customize
+/config/languages
+/config/readme.txt
+/config/tcServer
+/config/tomcat
+/data/hsqldb
