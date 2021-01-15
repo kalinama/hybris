@@ -1,8 +1,34 @@
-# Hybris123SnippetStart hybris123gitignore
+# Folders to ignore at the root of the repository
 /log
 /temp
-/bin/*
-!/bin/custom
 /roles
 /data
-# Hybris123SnippetEnd
+
+/bin/*
+!/bin/custom
+
+/config/backup
+/config/customize
+/config/languages
+/config/tcServer
+/config/tomcat
+
+# Folders to ignore wherever they are
+.externalToolBuilders
+.settings
+**/WEB-INF/lib
+classes
+gensrc
+
+# Files to ignore
+/config/readme.txt
+*.classpath
+*.class
+*.project
+*.springBeans
+*testclasses.xml
+platformhome.properties
+build.xml
+items.xsd
+beans.xsd
+extensioninfo.xsd
