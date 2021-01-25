@@ -18,6 +18,7 @@
 
 	<collectiontypes>
 		<collectiontype code="SongList" elementtype="Song" autocreate="true" type="list"/>
+		<collectiontype code="StringList" elementtype="java.lang.String" autocreate="true" type="list"/>
 	</collectiontypes>
 
 	<enumtypes>  
@@ -97,6 +98,11 @@
 					<description>popularity rating for each player within the band</description>
 					<persistence type="property" />
 				</attribute>
+				<attribute qualifier="playersInPopularityOrder" type="StringList">
+					<description>players alias in order of popularity</description>
+					<modifiers read="true" write="false"/>
+					<persistence type="dynamic" attributeHandler="bandPlayersInPopularityOrderAttributeHandler"/>
+				</attribute>
 			</attributes>
 		</itemtype>
 
@@ -160,6 +166,11 @@
 				</attribute>
 				<attribute qualifier="concertProgram" type="ConcertProgram">
 					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="daysUntil" type="java.lang.Long">
+					<description>number of days left before a concert is due to be held</description>
+					<persistence type="dynamic" attributeHandler="concertDaysUntilAttributeHandler" />
+					<modifiers read="true" write="false" />
 				</attribute>
 			</attributes>
 		</itemtype>
