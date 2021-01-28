@@ -1,0 +1,57 @@
+# ImpEx for Importing Tour and dates for a band
+
+# Macros / Replacement Parameter definitions
+$productCatalog=concertoursProductCatalog
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Online'])[unique=true,default=$productCatalog:Online]
+$baseProduct=baseProduct(code,catalogVersion(catalog(id[default='$productCatalog']),version[default='Online']))
+
+$supercategories=supercategories(code, $catalogVersion)
+$approved=approvalstatus(code)[default='approved']
+
+# Product catalog
+INSERT_UPDATE Catalog;id[unique=true]
+;$productCatalog
+ 
+# Product cataog version
+INSERT_UPDATE CatalogVersion;catalog(id)[unique=true];version[unique=true];active;languages(isoCode);readPrincipals(uid)
+;$productCatalog;Online;true;en,de;employeegroup
+
+# Insert Products
+INSERT_UPDATE Product;code[unique=true];name;band(code);$supercategories;manufacturerName;manufacturerAID;unit(code);ean;variantType(code);$catalogVersion;$approved
+;CT001;The Grand Little x Tour;B001;;x;y;pieces;;Concert;;
+
+INSERT_UPDATE Product;code[unique=true];$catalogVersion;hashtag[lang=en];hashtag[lang=de]
+;CT001;;yRockTour;yRockTour
+
+# Insert Variant Products
+INSERT_UPDATE Concert;code[unique=true];name;date[dateformat=dd.MM.yyyy];concertType(code);concertProgram(code);$baseProduct;$catalogVersion;$approved
+;CT001_1;Grand Tour - Minsk;12.05.2021;indoor;CP001;CT001;;
+;CT001_2;Grand Tour - Brest;23.08.2021;openair;CP002;CT001;;
+
+INSERT_UPDATE Concert;code[unique=true];$baseProduct;$catalogVersion;venue[lang=en];venue[lang=de]
+;CT001_1;CT001;;Palace of the Republic;Palast der Republik
+;CT001_2;CT001;;PrimeHall;PrimeHall
+
+INSERT_UPDATE Song;code[unique=true];name;date[dateformat=dd.MM.yyyy]
+;S001;Am I Savage?;11.01.2016
+;S002;Am I Evil?;18.04.1984
+;S003;...And Justice for All;24.09.1988
+;S004;Confusion;16.03.2016
+;S005;Devil's Dance;13.10.1997
+;S006;Disposable Heroes;08.07.1986
+;S007;Fight Fire with Fire;11.12.1984
+;S008;Hell and Back;03.11.2011
+;S009;Invisible Kid;19.12.2003
+;S010;Metal Militia;27.10.1983
+
+INSERT_UPDATE ConcertProgram;code[unique=true];songs(code);duration;concert(code)
+;CP001;S001,S003,S004,S007,S009,S010;60;CT001_1
+;CP002;S001,S002,S005,S006,S007,S008,S010;65;CT001_2
+
+INSERT_UPDATE ConcertProgram;code[unique=true];description[lang=en]
+;CP001;The main concept of the project: to show what the concerts of a cult rock band can be like after 30 years. Some of the songs will be performed by all participants together. Most of the material will be played as close to the original as possible, but it will not do without improvisation and new readings. High-quality sound and amazing stage production await all comers.
+;CP002;The band uses a variety of techniques in their songs: from flowing water to human bones, from reconstructed shields and swords to ancient tambourines and bronze rings. An integral part of this mystical performance is a ritual show that takes you to the astral plane to the all-consuming rhythms of shamanic and battle chants.
+
+INSERT_UPDATE ConcertProgram;code[unique=true];description[lang=de]
+;CP001;Das Hauptkonzept des Projekts: zu zeigen, wie die Konzerte einer Kult-Rockband nach 30 Jahren aussehen können. Einige der Songs werden von allen Teilnehmern zusammen aufgeführt. Das meiste Material wird so nah wie möglich am Original gespielt, aber es wird nicht ohne Improvisation und neue Lesarten auskommen. Hochwertiger Sound und eine erstaunliche Bühnenproduktion erwarten alle Ankömmlinge.
+;CP002;Die Band verwendet eine Vielzahl von Techniken in ihren Liedern: von fließendem Wasser bis zu menschlichen Knochen, von rekonstruierten Schilden und Schwertern bis zu alten Tamburinen und Bronzeringen. Ein wesentlicher Bestandteil dieser mystischen Aufführung ist eine rituelle Show, die Sie auf die Astralebene zu den alles verzehrenden Rhythmen schamanischer Gesänge und Kampfgesänge führt.
