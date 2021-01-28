@@ -123,7 +123,11 @@
 				</attribute>
 				<attribute qualifier="description" type="localized:java.lang.String">
 					<description>concert description</description>
-					<persistence type="property" />
+					<persistence type="property">
+						<columntype>
+								<value>varchar(1000)</value>
+						</columntype>
+					</persistence>
 				</attribute>
 				<attribute qualifier="concert" type="Concert">
 					<persistence type="property" />
