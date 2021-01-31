@@ -153,7 +153,6 @@
 			</attributes>
 		</itemtype>
 
-
 		<itemtype generate="true" code="Concert" extends="VariantProduct" autocreate="true">
 			<attributes>
 				<attribute qualifier="venue" type="localized:java.lang.String">
