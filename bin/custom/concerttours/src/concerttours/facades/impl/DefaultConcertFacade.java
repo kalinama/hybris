@@ -1,15 +1,15 @@
 package concerttours.facades.impl;
 
-import concerttours.converters.ConcertConverter;
 import concerttours.data.ConcertData;
 import concerttours.facades.ConcertFacade;
 import concerttours.model.ConcertModel;
 import de.hybris.platform.product.ProductService;
+import de.hybris.platform.servicelayer.dto.converter.Converter;
 import org.springframework.beans.factory.annotation.Required;
 
 public class DefaultConcertFacade implements ConcertFacade {
     private ProductService productService;
-    private ConcertConverter concertConverter;
+    private Converter<ConcertModel, ConcertData> concertConverter;
 
     @Override
     public ConcertData getConcertDetails(String concertId) {
@@ -29,7 +29,7 @@ public class DefaultConcertFacade implements ConcertFacade {
     }
 
     @Required
-    public void setConcertConverter(ConcertConverter concertConverter) {
+    public void setConcertConverter(Converter<ConcertModel, ConcertData> concertConverter) {
         this.concertConverter = concertConverter;
     }
 }

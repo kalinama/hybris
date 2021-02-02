@@ -1,12 +1,12 @@
 package concerttours.facades.impl;
 
-import concerttours.converters.BandConverter;
-import concerttours.converters.TourSummaryConverter;
 import concerttours.data.BandData;
 import concerttours.data.TourSummaryData;
 import concerttours.facades.BandFacade;
 import concerttours.model.BandModel;
 import concerttours.service.BandService;
+import de.hybris.platform.core.model.product.ProductModel;
+import de.hybris.platform.servicelayer.dto.converter.Converter;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Required;
 
@@ -16,8 +16,8 @@ import java.util.stream.Collectors;
 public class DefaultBandFacade implements BandFacade {
 
     private BandService bandService;
-    private BandConverter bandConverter;
-    private TourSummaryConverter tourSummaryConverter;
+    private Converter<BandModel, BandData> bandConverter;
+    private Converter<ProductModel, TourSummaryData> tourSummaryConverter;
 
     @Override
     public BandData getBand(String id) throws IllegalArgumentException {
@@ -55,12 +55,12 @@ public class DefaultBandFacade implements BandFacade {
     }
 
     @Required
-    public void setBandConverter(BandConverter bandConverter) {
+    public void setBandConverter(Converter<BandModel, BandData> bandConverter) {
         this.bandConverter = bandConverter;
     }
 
     @Required
-    public void setTourSummaryConverter(TourSummaryConverter tourSummaryConverter) {
+    public void setTourSummaryConverter(Converter<ProductModel, TourSummaryData> tourSummaryConverter) {
         this.tourSummaryConverter = tourSummaryConverter;
     }
 }

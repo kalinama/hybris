@@ -1,41 +1,50 @@
 # ImpEx for Importing Bands into Little Concert Tours Store
 
-INSERT_UPDATE Band;code[unique=true];name;albumSales
-;B001;yRock;1000000
-;B006;yBand;
-;B003;yJazz;7
-;B004;Banned;427
-;B002;Sirken;2000
-;B005;The Choir;49000
-;B007;The Quiet;1200
+INSERT_UPDATE Band; code[unique = true]; name      ; albumSales
+                  ; B001               ; yRock     ; 1000000
+                  ; B006               ; yBand     ;
+                  ; B003               ; yJazz     ; 7
+                  ; B004               ; Banned    ; 427
+                  ; B002               ; Sirken    ; 2000
+                  ; B005               ; The Choir ; 49000
+                  ; B007               ; The Quiet ; 1200
 
-INSERT_UPDATE Band;code[unique=true];history[lang=en]
-;B001;Occasional tribute rock band comprising senior managers from a leading commerce software vendor
-;B006;Dutch tribute rock band formed in 2013 playing classic rock tunes from the sixties, seventies and eighties
-;B003;Experimental Jazz group from London playing many musical notes together in unexpected combinations and sequences
-;B004;Rejuvenated Polish boy band from the 1990s - this genre of pop music at its most dubious best
-;B002;A cappella singing group based in Munich; an uplifting blend of traditional and contemporaneous songs
-;B005;Enthusiastic, noisy gospel choir singing traditional gospel songs from the deep south
-;B007;English choral society specialising in beautifully arranged, soothing melodies and songs
+INSERT_UPDATE Band; code[unique = true]; history[lang = en]
+                  ; B001               ; Occasional tribute rock band comprising senior managers from a leading commerce software vendor
+                  ; B006               ; Dutch tribute rock band formed in 2013 playing classic rock tunes from the sixties, seventies and eighties
+                  ; B003               ; Experimental Jazz group from London playing many musical notes together in unexpected combinations and sequences
+                  ; B004               ; Rejuvenated Polish boy band from the 1990s - this genre of pop music at its most dubious best
+                  ; B002               ; A cappella singing group based in Munich ; an uplifting blend of traditional and contemporaneous songs
+                  ; B005               ; Enthusiastic, noisy gospel choir singing traditional gospel songs from the deep south
+                  ; B007               ; English choral society specialising in beautifully arranged, soothing melodies and songs
 
-INSERT_UPDATE Band;code[unique=true];history[lang=de]
-;B001;Gelegentliche Tribut-Rock-Band bestehend aus Führungskräften eines führenden Commerce-Software-Anbieters
-;B006;Die niederländische Tribut-Rock-Band, die im Jahr 2013 mit klassischen Rock-Melodien aus den sechziger, siebziger und achtziger Jahren gegründet wurde
-;B003;Experimental Jazz Gruppe aus London, die viele musikalische Notizen zusammen in unerwarteten Kombinationen und Sequenzen spielt
-;B004;Verjüngte polnische Jungenband aus den 1990er Jahren - dieses Genre der Popmusik am zweifelhaftesten am besten
-;B002;A cappella singing group mit Sitz in München; Eine erhebende Mischung aus traditionellen und zeitgenössischen Liedern
-;B005;Enthusiastischer, lärmender Gospelchor singt traditionelle Gospel-Songs aus dem tiefen Süden
-;B007;Englisch Choralgesellschaft, spezialisiert auf wunderschön arrangierte, beruhigende Melodien und Lieder
+INSERT_UPDATE Band; code[unique = true]; history[lang = ru]
+                  ; B001               ; Рок-группа, состоящая из топ-менеджеров ведущего поставщика программного обеспечения для торговли
+                  ; B006               ; Голландская трибьют-рок-группа, образованная в 2013 году, исполняет классические рок-мелодии шестидесятых, семидесятых и восьмидесятых годов
+                  ; B003               ; Экспериментальная джазовая группа из Лондона, играющая множество нот вместе в неожиданных комбинациях и последовательностях
+                  ; B004               ; Обновленный польский бойз-бэнд 90-х - этот жанр поп-музыки в самых сомнительных проявлениях
+                  ; B002               ; "Ансамбль а капелла из Мюнхена; воодушевляющая смесь традиционных и современных песен"
+                  ; B005               ; Восторженный, шумный евангельский хор поет традиционные евангельские песни с далекого юга
+                  ; B007               ; Английское хоровое общество, специализирующееся на красиво аранжированных успокаивающих мелодиях и песнях
 
-INSERT_UPDATE Player;code[unique=true];alias;band(code)
-;P001;JonK;B001
-;P002;Dennis;B001
-;P003;Mike Love;B001
-;P004;Jardine;B001
-;P005;Roger McGuinn;B002
-;P006;Byrds;B002
-;P007;Glenn Frey;B002
+INSERT_UPDATE Band; code[unique = true]; history[lang = de]
+                  ; B001               ; Gelegentliche Tribut-Rock-Band bestehend aus Führungskräften eines führenden Commerce-Software-Anbieters
+                  ; B006               ; Die niederländische Tribut-Rock-Band, die im Jahr 2013 mit klassischen Rock-Melodien aus den sechziger, siebziger und achtziger Jahren gegründet wurde
+                  ; B003               ; Experimental Jazz Gruppe aus London, die viele musikalische Notizen zusammen in unerwarteten Kombinationen und Sequenzen spielt
+                  ; B004               ; Verjüngte polnische Jungenband aus den 1990er Jahren - dieses Genre der Popmusik am zweifelhaftesten am besten
+                  ; B002               ; A cappella singing group mit Sitz in München ; Eine erhebende Mischung aus traditionellen und zeitgenössischen Liedern
+                  ; B005               ; Enthusiastischer, lärmender Gospelchor singt traditionelle Gospel-Songs aus dem tiefen Süden
+                  ; B007               ; Englisch Choralgesellschaft, spezialisiert auf wunderschön arrangierte, beruhigende Melodien und Lieder
 
-INSERT_UPDATE Band;code[unique=true];ratingPerPlayer(key(code),value)[map-delimiter=|][key2value-delimiter=->]
-;B001;P001->298|P002->334|P003->887|P004->1931
-;B002;P005->2698|P006->874|P007->187
+INSERT_UPDATE Player; code[unique = true]; alias         ; band(code)
+                    ; P001               ; JonK          ; B001
+                    ; P002               ; Dennis        ; B001
+                    ; P003               ; Mike Love     ; B001
+                    ; P004               ; Jardine       ; B001
+                    ; P005               ; Roger McGuinn ; B002
+                    ; P006               ; Byrds         ; B002
+                    ; P007               ; Glenn Frey    ; B002
+
+INSERT_UPDATE Band; code[unique = true]; ratingPerPlayer(key(code), value)[map-delimiter = |][key2value-delimiter = ->]
+                  ; B001               ; P001->298|P002->334|P003->887|P004->1931
+                  ; B002               ; P005->2698|P006->874|P007->187

@@ -39,18 +39,56 @@
         <property name="importService" ref="importService"/>
     </bean>
 
+    <!-- populators -->
+    <bean id="bandPopulator" class="concerttours.populators.BandPopulator"/>
+    <bean id="tourPopulator" class="concerttours.populators.TourPopulator"/>
+    <bean id="tourSummaryPopulator" class="concerttours.populators.TourSummaryPopulator"/>
+    <bean id="concertPopulator" class="concerttours.populators.ConcertPopulator"/>
+    <bean id="concertSummaryPopulator" class="concerttours.populators.ConcertSummaryPopulator"/>
+
+
     <!-- converters -->
-    <bean id="bandConverter" class="concerttours.converters.BandConverter">
-        <property name="i18NService" ref="i18NService"/>
+    <bean id="bandConverter" parent="abstractPopulatingConverter">
+        <property name="targetClass" value="concerttours.data.BandData" />
+        <property name="populators">
+            <list merge="true">
+                <ref bean="bandPopulator" />
+            </list>
+        </property>
     </bean>
-    <bean id="tourSummaryConverter" class="concerttours.converters.TourSummaryConverter"/>
-    <bean id="tourDataConverter" class="concerttours.converters.TourConverter"/>
-    <bean id ="concertSummaryConverter" class="concerttours.converters.ConcertSummaryConverter">
-        <property name="i18NService" ref="i18NService"/>
+    <bean id="tourConverter" parent="abstractPopulatingConverter">
+        <property name="targetClass" value="concerttours.data.TourData" />
+        <property name="populators">
+            <list merge="true">
+                <ref bean="tourPopulator" />
+            </list>
+        </property>
     </bean>
-    <bean id="concertConverter" class="concerttours.converters.ConcertConverter">
-        <property name="i18NService" ref="i18NService"/>
+    <bean id="concertConverter" parent="abstractPopulatingConverter">
+        <property name="targetClass" value="concerttours.data.ConcertData" />
+        <property name="populators">
+            <list merge="true">
+                <ref bean="concertPopulator" />
+            </list>
+        </property>
     </bean>
+    <bean id="tourSummaryConverter" parent="abstractPopulatingConverter">
+        <property name="targetClass" value="concerttours.data.TourSummaryData" />
+        <property name="populators">
+            <list merge="true">
+                <ref bean="tourSummaryPopulator" />
+            </list>
+        </property>
+    </bean>
+    <bean id="concertSummaryConverter" parent="abstractPopulatingConverter">
+        <property name="targetClass" value="concerttours.data.ConcertSummaryData" />
+        <property name="populators">
+            <list merge="true">
+                <ref bean="concertSummaryPopulator" />
+            </list>
+        </property>
+    </bean>
+
 
     <!-- facades -->
     <alias name = "defaultBandFacade" alias = "bandFacade" />
@@ -63,7 +101,7 @@
     <bean id="defaultTourFacade" class="concerttours.facades.impl.DefaultTourFacade">
         <property name="productService" ref="productService"/>
         <property name="concertSummaryConverter" ref="concertSummaryConverter"/>
-        <property name="tourConverter" ref="tourDataConverter"/>
+        <property name="tourConverter" ref="tourConverter"/>
     </bean>
     <alias name = "defaultConcertFacade" alias = "concertFacade" />
     <bean id="defaultConcertFacade" class="concerttours.facades.impl.DefaultConcertFacade">
