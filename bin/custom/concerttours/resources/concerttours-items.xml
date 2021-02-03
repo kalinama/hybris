@@ -13,183 +13,205 @@
 	ATTENTION: This is just an example file. You have to edit it according to your needs.
 -->
 
-<items 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-			xsi:noNamespaceSchemaLocation="items.xsd">
+<items xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="items.xsd">
 
-	<collectiontypes>
-		<collectiontype code="SongList" elementtype="Song" autocreate="true" type="list"/>
-		<collectiontype code="StringList" elementtype="java.lang.String" autocreate="true" type="list"/>
-	</collectiontypes>
+    <collectiontypes>
+        <collectiontype code="SongList" elementtype="Song" autocreate="true" type="list"/>
+        <collectiontype code="StringList" elementtype="java.lang.String" autocreate="true" type="list"/>
+    </collectiontypes>
 
-	<enumtypes>  
-      	<enumtype code="ConcertType" autocreate="true" generate="true" dynamic="false">
-        	<value code="openair"/>
-          	<value code="indoor"/>
-      	</enumtype>
-      	<enumtype code="MusicType" autocreate="true" generate="true" dynamic="true">
-      	</enumtype>
-    </enumtypes> 
+    <enumtypes>
+        <enumtype code="ConcertType" autocreate="true" generate="true" dynamic="false">
+            <value code="openair"/>
+            <value code="indoor"/>
+        </enumtype>
+        <enumtype code="MusicType" autocreate="true" generate="true" dynamic="true">
+        </enumtype>
+    </enumtypes>
 
-	<maptypes>
-		<maptype code="PlayerRatingMap"
-                argumenttype="Player"
-                returntype="java.lang.Long"
-                autocreate="true"/>
-	</maptypes>
-	  
-	<relations>
-		<relation code="Product2Band" autocreate="true" generate="false" localized="false">
-			<sourceElement qualifier="tours" type="Product" collectiontype="set" cardinality="many" ordered="false">
-				<modifiers read="true" write="true" search="true" optional="true" />
-			</sourceElement>
-			<targetElement qualifier="band" type="Band" cardinality="one">
-				<modifiers read="true" write="true" search="true" optional="true" />
-			</targetElement>
-		</relation>
-		<relation code="Band2MusicType" autocreate="true" generate="false" localized="false">
-			<deployment table="Band2MusicType" typecode="10001" />
-			<sourceElement qualifier="bands" type="Band" collectiontype="set" cardinality="many" ordered="false">
-				<modifiers read="true" write="true" search="true" optional="true" />
-			</sourceElement>
-			<targetElement qualifier="types" type="MusicType" cardinality="many">
-				<modifiers read="true" write="true" search="true" optional="true" />
-			</targetElement>
-		</relation>
-		<relation code="Band2Player" autocreate="true" generate="false" localized="false">
-			<sourceElement qualifier="band" type="Band"  cardinality="one">
-				<modifiers read="true" write="true" search="true" optional="true" />
-			</sourceElement>
-			<targetElement qualifier="players" type="Player" collectiontype="set" cardinality="many" ordered="false">
-				<modifiers read="true" write="true" search="true" optional="true" />
-			</targetElement>
-		</relation>
-  </relations> 
+    <maptypes>
+        <maptype code="PlayerRatingMap"
+                 argumenttype="Player"
+                 returntype="java.lang.Long"
+                 autocreate="true"/>
+    </maptypes>
 
-	<itemtypes>
-		<itemtype generate="true" code="Product" autocreate="false">
-		<attributes>
-			<attribute qualifier="hashtag" type="localized:java.lang.String">
-				<description>hashtag of concert tour for social media</description>
-				<persistence type="property" />
-			</attribute>
-		</attributes>
-		</itemtype>
+    <relations>
+        <relation code="Product2Band" autocreate="true" generate="false" localized="false">
+            <sourceElement qualifier="tours" type="Product" collectiontype="set" cardinality="many" ordered="false">
+                <modifiers read="true" write="true" search="true" optional="true"/>
+            </sourceElement>
+            <targetElement qualifier="band" type="Band" cardinality="one">
+                <modifiers read="true" write="true" search="true" optional="true"/>
+            </targetElement>
+        </relation>
+        <relation code="Band2MusicType" autocreate="true" generate="false" localized="false">
+            <deployment table="Band2MusicType" typecode="10001"/>
+            <sourceElement qualifier="bands" type="Band" collectiontype="set" cardinality="many" ordered="false">
+                <modifiers read="true" write="true" search="true" optional="true"/>
+            </sourceElement>
+            <targetElement qualifier="types" type="MusicType" cardinality="many">
+                <modifiers read="true" write="true" search="true" optional="true"/>
+            </targetElement>
+        </relation>
+        <relation code="Band2Player" autocreate="true" generate="false" localized="false">
+            <sourceElement qualifier="band" type="Band" cardinality="one">
+                <modifiers read="true" write="true" search="true" optional="true"/>
+            </sourceElement>
+            <targetElement qualifier="players" type="Player" collectiontype="set" cardinality="many" ordered="false">
+                <modifiers read="true" write="true" search="true" optional="true"/>
+            </targetElement>
+        </relation>
+    </relations>
 
-		<itemtype generate="true" code="Band" autocreate="true">
-			<deployment table="Bands" typecode="10003" />
-			<attributes>
-				<attribute qualifier="code" type="java.lang.String">
-					<description>short unique code of band</description>
-					<persistence type="property" />
-				</attribute>
-				<attribute qualifier="name" type="java.lang.String">
-					<description>name of band</description>
-					<persistence type="property" />
-				</attribute>
-				<attribute qualifier="history" type="localized:java.lang.String">
-					<description>history of band</description>
-					<persistence type="property" />
-				</attribute>
-				<attribute qualifier="albumSales" type="java.lang.Long">
-					<description>official global album sales</description>
-					<persistence type="property" />
-				</attribute>
-				<attribute qualifier="ratingPerPlayer" type="PlayerRatingMap">
-					<description>popularity rating for each player within the band</description>
-					<persistence type="property" />
-				</attribute>
-				<attribute qualifier="playersInPopularityOrder" type="StringList">
-					<description>players alias in order of popularity</description>
-					<modifiers read="true" write="false"/>
-					<persistence type="dynamic" attributeHandler="bandPlayersInPopularityOrderAttributeHandler"/>
-				</attribute>
-			</attributes>
-		</itemtype>
+    <itemtypes>
+        <itemtype generate="true" code="Product" autocreate="false">
+            <attributes>
+                <attribute qualifier="hashtag" type="localized:java.lang.String">
+                    <description>hashtag of concert tour for social media</description>
+                    <persistence type="property"/>
+                </attribute>
+            </attributes>
+        </itemtype>
 
-		<itemtype generate="true" code="ConcertProgram" autocreate="true">
-			<deployment table="ConcertPrograms" typecode="10004" />
-			<attributes>
-				<attribute qualifier="code" type="java.lang.String">
-					<description>short unique code of program</description>
-					<persistence type="property" />
-				</attribute>
-				<attribute qualifier="songs" type="SongList">
-					<description>songs performed by the band</description>
-					<persistence type="property" />
-				</attribute>
-				<attribute qualifier="duration" type="java.lang.Long">
-					<description>concert duration in minutes</description>
-					<persistence type="property" />
-				</attribute>
-				<attribute qualifier="description" type="localized:java.lang.String">
-					<description>concert description</description>
-					<persistence type="property">
-						<columntype>
-								<value>varchar(1000)</value>
-						</columntype>
-					</persistence>
-				</attribute>
-				<attribute qualifier="concert" type="Concert">
-					<persistence type="property" />
-				</attribute>
-			</attributes>
-		</itemtype>
+        <itemtype generate="true" code="Band" autocreate="true">
+            <deployment table="Bands" typecode="10003"/>
+            <attributes>
+                <attribute qualifier="code" type="java.lang.String">
+                    <description>short unique code of band</description>
+                    <persistence type="property"/>
+                </attribute>
+                <attribute qualifier="name" type="java.lang.String">
+                    <description>name of band</description>
+                    <persistence type="property"/>
+                </attribute>
+                <attribute qualifier="history" type="localized:java.lang.String">
+                    <description>history of band</description>
+                    <persistence type="property"/>
+                </attribute>
+                <attribute qualifier="albumSales" type="java.lang.Long">
+                    <description>official global album sales</description>
+                    <persistence type="property"/>
+                </attribute>
+                <attribute qualifier="ratingPerPlayer" type="PlayerRatingMap">
+                    <description>popularity rating for each player within the band</description>
+                    <persistence type="property"/>
+                </attribute>
+                <attribute qualifier="playersInPopularityOrder" type="StringList">
+                    <description>players alias in order of popularity</description>
+                    <modifiers read="true" write="false"/>
+                    <persistence type="dynamic" attributeHandler="bandPlayersInPopularityOrderAttributeHandler"/>
+                </attribute>
+            </attributes>
+        </itemtype>
 
-		<itemtype generate="true" code="Song" autocreate="true">
-			<deployment table="Songs" typecode="10005" />
-			<attributes>
-				<attribute qualifier="code" type="java.lang.String">
-					<description>short unique code of song</description>
-					<persistence type="property" />
-				</attribute>
-				<attribute qualifier="name" type="java.lang.String">
-					<description>name of song</description>
-					<persistence type="property" />
-				</attribute>
-				<attribute qualifier="date" type="java.util.Date">
-					<description>date of release</description>
-					<persistence type="property" />
-				</attribute>
-			</attributes>
-		</itemtype>
+        <itemtype generate="true" code="ConcertProgram" autocreate="true">
+            <deployment table="ConcertPrograms" typecode="10004"/>
+            <attributes>
+                <attribute qualifier="code" type="java.lang.String">
+                    <description>short unique code of program</description>
+                    <persistence type="property"/>
+                </attribute>
+                <attribute qualifier="songs" type="SongList">
+                    <description>songs performed by the band</description>
+                    <persistence type="property"/>
+                </attribute>
+                <attribute qualifier="duration" type="java.lang.Long">
+                    <description>concert duration in minutes</description>
+                    <persistence type="property"/>
+                </attribute>
+                <attribute qualifier="description" type="localized:java.lang.String">
+                    <description>concert description</description>
+                    <persistence type="property">
+                        <columntype>
+                            <value>varchar(1000)</value>
+                        </columntype>
+                    </persistence>
+                </attribute>
+                <attribute qualifier="concert" type="Concert">
+                    <persistence type="property"/>
+                </attribute>
+            </attributes>
+        </itemtype>
 
-		<itemtype generate="true" code="Concert" extends="VariantProduct" autocreate="true">
-			<attributes>
-				<attribute qualifier="venue" type="localized:java.lang.String">
-					<description>venue of concert</description>
-					<persistence type="property" />
-				</attribute>
-				<attribute qualifier="date" type="java.util.Date">
-					<description>date of concert</description>
-					<persistence type="property" />
-				</attribute>
-				<attribute qualifier="concertType" type="ConcertType">
-					<description>type of concert (indoors or open air)</description>
-					<persistence type="property" />
-				</attribute>
-				<attribute qualifier="concertProgram" type="ConcertProgram">
-					<persistence type="property" />
-				</attribute>
-				<attribute qualifier="daysUntil" type="java.lang.Long">
-					<description>number of days left before a concert is due to be held</description>
-					<persistence type="dynamic" attributeHandler="concertDaysUntilAttributeHandler" />
-					<modifiers read="true" write="false" />
-				</attribute>
-			</attributes>
-		</itemtype>
+        <itemtype generate="true" code="Song" autocreate="true">
+            <deployment table="Songs" typecode="10005"/>
+            <attributes>
+                <attribute qualifier="code" type="java.lang.String">
+                    <description>short unique code of song</description>
+                    <persistence type="property"/>
+                </attribute>
+                <attribute qualifier="name" type="java.lang.String">
+                    <description>name of song</description>
+                    <persistence type="property"/>
+                </attribute>
+                <attribute qualifier="date" type="java.util.Date">
+                    <description>date of release</description>
+                    <persistence type="property"/>
+                </attribute>
+            </attributes>
+        </itemtype>
 
-		<itemtype generate="true" code="Player" autocreate="true">
-			<deployment table="Players" typecode="10006" />
-			<attributes>
-				<attribute qualifier="code" type="java.lang.String">
-					<description>short unique code of player</description>
-					<persistence type="property" />
-				</attribute>
-				<attribute qualifier="alias" type="java.lang.String">
-					<description>alias of player</description>
-					<persistence type="property" />
-				</attribute>
-			</attributes>
-		</itemtype>
-	</itemtypes>
+        <itemtype generate="true" code="Concert" extends="VariantProduct" autocreate="true">
+            <attributes>
+                <attribute qualifier="venue" type="localized:java.lang.String">
+                    <description>venue of concert</description>
+                    <persistence type="property"/>
+                </attribute>
+                <attribute qualifier="date" type="java.util.Date">
+                    <description>date of concert</description>
+                    <persistence type="property"/>
+                </attribute>
+                <attribute qualifier="concertType" type="ConcertType">
+                    <description>type of concert (indoors or open air)</description>
+                    <persistence type="property"/>
+                </attribute>
+                <attribute qualifier="concertProgram" type="ConcertProgram">
+                    <persistence type="property"/>
+                </attribute>
+                <attribute qualifier="daysUntil" type="java.lang.Long">
+                    <description>number of days left before a concert is due to be held</description>
+                    <persistence type="dynamic" attributeHandler="concertDaysUntilAttributeHandler"/>
+                    <modifiers read="true" write="false"/>
+                </attribute>
+            </attributes>
+        </itemtype>
+
+        <itemtype generate="true" code="Player" autocreate="true">
+            <deployment table="Players" typecode="10006"/>
+            <attributes>
+                <attribute qualifier="code" type="java.lang.String">
+                    <description>short unique code of player</description>
+                    <persistence type="property"/>
+                </attribute>
+                <attribute qualifier="alias" type="java.lang.String">
+                    <description>alias of player</description>
+                    <persistence type="property"/>
+                </attribute>
+            </attributes>
+        </itemtype>
+
+        <itemtype code="News" autocreate="true" generate="true">
+            <deployment table="News" typecode="10007"/>
+            <attributes>
+                <attribute qualifier="content" type="java.lang.String">
+                    <description>fuller description of the news item</description>
+                    <persistence type="property">
+                        <columntype>
+                            <value>varchar(1000)</value>
+                        </columntype>
+                    </persistence>
+                </attribute>
+                <attribute qualifier="date" type="java.util.Date">
+                    <description>date of news publishing</description>
+                    <persistence type="property"/>
+                </attribute>
+                <attribute qualifier="headline" type="java.lang.String">
+                    <description>short headline for the news item</description>
+                    <persistence type="property"/>
+                </attribute>
+            </attributes>
+        </itemtype>
+    </itemtypes>
 </items>
