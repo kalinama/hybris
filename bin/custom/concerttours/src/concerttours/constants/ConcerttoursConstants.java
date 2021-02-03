@@ -15,6 +15,8 @@ package concerttours.constants;
  */
 public final class ConcerttoursConstants extends GeneratedConcerttoursConstants
 {
+	public static final Long ALBUM_SALES_BOUNDARY_VALUE = 5000L;
+
 	public static final String EXTENSIONNAME = "concerttours";
 	public static final String CATALOG_ID = "concertoursProductCatalog";
 	public static final String CATALOG_VERSION_NAME = "Online";
