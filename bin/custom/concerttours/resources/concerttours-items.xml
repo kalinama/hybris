@@ -168,6 +168,7 @@
                     <persistence type="property"/>
                 </attribute>
                 <attribute qualifier="concertProgram" type="ConcertProgram">
+                    <description>concert program for the concert</description>
                     <persistence type="property"/>
                 </attribute>
                 <attribute qualifier="daysUntil" type="java.lang.Long">
@@ -218,15 +219,15 @@
             <deployment table="DailyNewsInfo" typecode="10008"/>
             <attributes>
                 <attribute qualifier="date" type="java.util.Date">
-                    <description>Date of request of daily news</description>
+                    <description>date of request of daily news</description>
                     <persistence type="property"/>
                 </attribute>
                 <attribute qualifier="amountOfNews" type="java.lang.Integer">
-                    <description>Amount of daily news at the time of request</description>
+                    <description>amount of daily news at the time of request</description>
                     <persistence type="property"/>
                 </attribute>
                 <attribute qualifier="content" type="java.lang.String">
-                    <description>News summary content</description>
+                    <description>news summary content</description>
                     <persistence type="property">
                         <columntype>
                             <value>varchar(2000)</value>
