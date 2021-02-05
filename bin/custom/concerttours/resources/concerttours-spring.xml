@@ -41,9 +41,13 @@
         <property name="typeCode" value="Band"/>
     </bean>
 
+
     <bean id="concerttoursSystemSetup" class="concerttours.setup.ConcerttoursSystemSetup">
         <!-- constructor arg injection example -->
         <constructor-arg ref="concerttoursService"/>
+    </bean>
+    <bean id="concerttoursCustomSetup" class="concerttours.setup.ConcerttoursCustomSetup">
+        <property name="importService" ref="importService"/>
     </bean>
 
     <bean id="bandPlayersInPopularityOrderAttributeHandler"
@@ -58,12 +62,11 @@
         <property name="flexibleSearchService" ref="flexibleSearchService"/>
     </bean>
 
-    <bean id="concerttoursCustomSetup" class="concerttours.setup.ConcerttoursCustomSetup">
-        <property name="importService" ref="importService"/>
-    </bean>
 
     <!-- populators -->
-    <bean id="bandPopulator" class="concerttours.populators.BandPopulator"/>
+    <bean id="bandPopulator" class="concerttours.populators.BandPopulator">
+        <property name="configurationService" ref="configurationService"/>
+    </bean>
     <bean id="tourPopulator" class="concerttours.populators.TourPopulator"/>
     <bean id="tourSummaryPopulator" class="concerttours.populators.TourSummaryPopulator"/>
     <bean id="concertPopulator" class="concerttours.populators.ConcertPopulator"/>
