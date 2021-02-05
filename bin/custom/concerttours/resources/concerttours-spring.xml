@@ -18,6 +18,10 @@
 
     <context:component-scan base-package="concerttours"/>
 
+    <!-- jobs -->
+    <bean id="dailyNewsInfoGeneratingJob" class="concerttours.jobs.DailyNewsInfoGeneratingJob" parent="abstractJobPerformable">
+        <property name="newsService" ref="defaultNewsService"/>
+    </bean>
     <!-- listeners -->
     <bean id="newBandEventListener" class="concerttours.events.NewBandEventListener" parent="abstractEventListener">
         <property name="modelService" ref="modelService"/>
@@ -133,10 +137,18 @@
     <bean name="defaultBandService" class="concerttours.service.impl.DefaultBandService">
         <property name="bandDAO" ref="defaultBandDAO"/>
     </bean>
+    <alias name="defaultNewsService" alias="newsService"/>
+    <bean name="defaultNewsService" class="concerttours.service.impl.DefaultNewsService">
+        <property name="newsDAO" ref="defaultNewsDAO"/>
+    </bean>
 
     <!-- DAOs -->
     <alias name="defaultBandDAO" alias="bandDAO"/>
     <bean name="defaultBandDAO" class="concerttours.dao.impl.DefaultBandDAO">
+        <property name="flexibleSearchService" ref="defaultFlexibleSearchService"/>
+    </bean>
+    <alias name="defaultNewsDAO" alias="newsDAO"/>
+    <bean name="defaultNewsDAO" class="concerttours.dao.impl.DefaultNewsDAO">
         <property name="flexibleSearchService" ref="defaultFlexibleSearchService"/>
     </bean>
 

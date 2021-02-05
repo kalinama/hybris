@@ -213,5 +213,32 @@
                 </attribute>
             </attributes>
         </itemtype>
+
+        <itemtype code="DailyNewsInfo" generate="true" autocreate="true">
+            <deployment table="DailyNewsInfo" typecode="10008"/>
+            <attributes>
+                <attribute qualifier="date" type="java.util.Date">
+                    <description>Date of request of daily news</description>
+                    <persistence type="property"/>
+                </attribute>
+                <attribute qualifier="amountOfNews" type="java.lang.Integer">
+                    <description>Amount of daily news at the time of request</description>
+                    <persistence type="property"/>
+                </attribute>
+                <attribute qualifier="content" type="java.lang.String">
+                    <description>News summary content</description>
+                    <persistence type="property">
+                        <columntype>
+                            <value>varchar(2000)</value>
+                        </columntype>
+                    </persistence>
+                </attribute>
+            </attributes>
+        </itemtype>
+
+        <itemtype code="DailyNewsInfoGeneratingCronJob"
+                  extends="CronJob"
+                  autocreate="true"
+                  generate="true"/>
     </itemtypes>
 </items>
