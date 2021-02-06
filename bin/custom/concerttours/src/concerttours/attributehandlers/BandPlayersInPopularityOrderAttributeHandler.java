@@ -3,12 +3,10 @@ package concerttours.attributehandlers;
 import concerttours.model.BandModel;
 import concerttours.model.PlayerModel;
 import de.hybris.platform.servicelayer.model.attribute.AbstractDynamicAttributeHandler;
-import org.springframework.stereotype.Component;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
-@Component
 public class BandPlayersInPopularityOrderAttributeHandler extends AbstractDynamicAttributeHandler<List<String>, BandModel> {
     @Override
     public List<String> get(final BandModel model) {

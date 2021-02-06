@@ -2,13 +2,11 @@ package concerttours.attributehandlers;
 
 import concerttours.model.ConcertModel;
 import de.hybris.platform.servicelayer.model.attribute.AbstractDynamicAttributeHandler;
-import org.springframework.stereotype.Component;
 
 import java.time.Duration;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
-@Component
 public class ConcertDaysUntilAttributeHandler extends AbstractDynamicAttributeHandler<Long, ConcertModel> {
     @Override
     public Long get(final ConcertModel model) {
