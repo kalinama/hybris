@@ -10,78 +10,23 @@
  license agreement you entered into with SAP.
 -->
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:aop="http://www.springframework.org/schema/aop"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans
-           http://www.springframework.org/schema/beans/spring-beans.xsd
-           http://www.springframework.org/schema/aop
-           http://www.springframework.org/schema/aop/spring-aop.xsd">
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+            http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-	<!--
-	The hybris platform provides one single Spring application context for beans located at the jalo layer.
-	Each extension can add beans to this context by specifying them at this configuration file.
-	 
-	You can use and/or redefine beans defined at configuration files of other extensions as well as
-	adding new one.
-		
-	If you want to locate this file at a different location or want to use several files for better,
-	structuring, please use the '<yourextension>.application-context' property at your project.properties file.
-	There you can specify a comma separated list of files where first is tried to find a file per classpath and
-	then per file system.
+    <context:component-scan base-package="concerttours"/>
 
-	
-	If you want to configure beans for your web module please have a look at
-	your web/webroot/WEB-INF/<extname>-web-spring.xml.
-	-->
-	
-	<!--  Example how to override a manager -->
-	<!--
-	<bean id="core.productManager"   class="concerttours.jalo.ConcerttoursProductManager" 	init-method="init"	destroy-method="destroy" />
-	-->
-	
-	
- 	<!--  Example how to configure the class to use for jalo session creation -->
-	<!--
-	<bean id="jalosession"   class="de.hybris.platform.jalo.JaloSessionFactory">
-		<property name="targetClassName" value="concerttours.jalo.ConcerttoursJaloSession"/>
-	</bean>
-	-->
-
-	
-	<!--  Example how to override an item  -->
-	<!-- 
-	<bean id="de.hybris.platform.jalo.product.Product" class="concerttours.jalo.ConcerttoursProduct" scope="prototype" />		
- 	-->
-
-	<!--  
-	 Example how to register and use an AOP aspect 
-     Also see http://static.springframework.org/spring/docs/2.5.x/reference/aop.html	
-     -->
-	
-	<!-- 
-	<bean id="concerttoursProfBean" class="concerttours.aop.ConcerttoursProfilingAspect"/>
-	<aop:config proxy-target-class="true">
-  		<aop:aspect id="concerttoursProfAspect" ref="concerttoursProfBean" >
-    	  <aop:pointcut id="profiledMethods" 
-	      	expression="execution(* getModificationTime(..))" />  	            
-	   		<aop:around pointcut-ref="profiledMethods" method="profile" />
-  		</aop:aspect>
-	</aop:config>
-	 -->
-
-	
-	<!-- some other examples of a pointcut that matches everything:
-
-    	  <aop:pointcut id="profiledMethods" 
-	      	expression="bean(de.hybris.platform.jalo.user.Customer) &amp;&amp; 
-	      	            !execution(* getPK(..))" />  	            
-	       <aop:pointcut id="profiledMethods" expression="execution(* *(..))" />	
-	  -->
-	
     <bean id="concerttoursSystemSetup" class="concerttours.setup.ConcerttoursSystemSetup">
         <!-- constructor arg injection example -->
         <constructor-arg ref="concerttoursService"/>
     </bean>
+
+    <bean id="bandPlayersInPopularityOrderAttributeHandler"
+          class="concerttours.attributehandlers.BandPlayersInPopularityOrderAttributeHandler"/>
+    <bean id="concertDaysUntilAttributeHandler"
+          class="concerttours.attributehandlers.ConcertDaysUntilAttributeHandler"/>
 
     <bean id="concerttoursService" class="concerttours.service.impl.DefaultConcerttoursService">
         <!-- setter injection example -->
@@ -89,5 +34,97 @@
         <property name="mediaService" ref="mediaService"/>
         <property name="flexibleSearchService" ref="flexibleSearchService"/>
     </bean>
-			
+
+    <bean id="concerttoursCustomSetup" class="concerttours.setup.ConcerttoursCustomSetup">
+        <property name="importService" ref="importService"/>
+    </bean>
+
+    <!-- populators -->
+    <bean id="bandPopulator" class="concerttours.populators.BandPopulator"/>
+    <bean id="bandTourPopulator" class="concerttours.populators.BandToursPopulator">
+        <property name="tourSummaryConverter" ref="tourSummaryConverter"/>
+    </bean>
+    <bean id="tourPopulator" class="concerttours.populators.TourPopulator"/>
+    <bean id="tourConcertsPopulator" class="concerttours.populators.TourConcertsPopulator">
+        <property name="concertSummaryConverter" ref="concertSummaryConverter"/>
+    </bean>
+    <bean id="tourSummaryPopulator" class="concerttours.populators.TourSummaryPopulator"/>
+    <bean id="concertPopulator" class="concerttours.populators.ConcertPopulator"/>
+    <bean id="concertSummaryPopulator" class="concerttours.populators.ConcertSummaryPopulator"/>
+
+
+    <!-- converters -->
+    <bean id="bandConverter" parent="abstractPopulatingConverter">
+        <property name="targetClass" value="concerttours.data.BandData"/>
+        <property name="populators">
+            <list merge="true">
+                <ref bean="bandPopulator"/>
+                <ref bean="bandTourPopulator"/>
+            </list>
+        </property>
+    </bean>
+    <bean id="tourConverter" parent="abstractPopulatingConverter">
+        <property name="targetClass" value="concerttours.data.TourData"/>
+        <property name="populators">
+            <list merge="true">
+                <ref bean="tourPopulator"/>
+                <ref bean="tourConcertsPopulator"/>
+            </list>
+        </property>
+    </bean>
+    <bean id="concertConverter" parent="abstractPopulatingConverter">
+        <property name="targetClass" value="concerttours.data.ConcertData"/>
+        <property name="populators">
+            <list merge="true">
+                <ref bean="concertPopulator"/>
+            </list>
+        </property>
+    </bean>
+    <bean id="tourSummaryConverter" parent="abstractPopulatingConverter">
+        <property name="targetClass" value="concerttours.data.TourSummaryData"/>
+        <property name="populators">
+            <list merge="true">
+                <ref bean="tourSummaryPopulator"/>
+            </list>
+        </property>
+    </bean>
+    <bean id="concertSummaryConverter" parent="abstractPopulatingConverter">
+        <property name="targetClass" value="concerttours.data.ConcertSummaryData"/>
+        <property name="populators">
+            <list merge="true">
+                <ref bean="concertSummaryPopulator"/>
+            </list>
+        </property>
+    </bean>
+
+
+    <!-- facades -->
+    <alias name="defaultBandFacade" alias="bandFacade"/>
+    <bean id="defaultBandFacade" class="concerttours.facades.impl.DefaultBandFacade">
+        <property name="bandService" ref="defaultBandService"/>
+        <property name="bandConverter" ref="bandConverter"/>
+    </bean>
+    <alias name="defaultTourFacade" alias="tourFacade"/>
+    <bean id="defaultTourFacade" class="concerttours.facades.impl.DefaultTourFacade">
+        <property name="productService" ref="productService"/>
+        <property name="tourConverter" ref="tourConverter"/>
+    </bean>
+    <alias name="defaultConcertFacade" alias="concertFacade"/>
+    <bean id="defaultConcertFacade" class="concerttours.facades.impl.DefaultConcertFacade">
+        <property name="productService" ref="productService"/>
+        <property name="concertConverter" ref="concertConverter"/>
+    </bean>
+
+    <!-- services -->
+    <alias name="defaultBandService" alias="bandService"/>
+    <bean name="defaultBandService" class="concerttours.service.impl.DefaultBandService">
+        <property name="bandDAO" ref="defaultBandDAO"/>
+    </bean>
+
+    <!-- DAOs -->
+    <alias name="defaultBandDAO" alias="bandDAO"/>
+    <bean name="defaultBandDAO" class="concerttours.dao.impl.DefaultBandDAO">
+        <property name="flexibleSearchService" ref="defaultFlexibleSearchService"/>
+    </bean>
+
 </beans>

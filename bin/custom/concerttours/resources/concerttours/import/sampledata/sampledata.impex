@@ -1,0 +1,76 @@
+# ImpEx for Sample Project Data into Little Concert Tours Store
+
+$productCatalog=Default
+$catalogVersion=catalogVersion(catalog(id[default='$productCatalog']),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$baseProduct=baseProduct(code, catalogVersion(catalog(id[default='$productCatalog']),version[default='Staged']))
+
+INSERT_UPDATE Band;code[unique=true];name;albumSales
+;B001;yRock;1000000
+;B006;yBand;
+;B003;yJazz;7
+;B004;Banned;427
+;B002;Sirken;2000
+;B005;The Choir;49000
+;B007;The Quiet;1200
+
+INSERT_UPDATE Band;code[unique=true];history[lang=en]
+;B001;Occasional tribute rock band comprising senior managers from a leading commerce software vendor
+;B006;Dutch tribute rock band formed in 2013 playing classic rock tunes from the sixties, seventies and eighties
+;B003;Experimental Jazz group from London playing many musical notes together in unexpected combinations and sequences
+;B004;Rejuvenated Polish boy band from the 1990s - this genre of pop music at its most dubious best
+;B002;A cappella singing group based in Munich; an uplifting blend of traditional and contemporaneous songs
+;B005;Enthusiastic, noisy gospel choir singing traditional gospel songs from the deep south
+;B007;English choral society specialising in beautifully arranged, soothing melodies and songs
+
+INSERT_UPDATE Band;code[unique=true];history[lang=de]
+;B001;Gelegentliche Tribut-Rock-Band bestehend aus Führungskräften eines führenden Commerce-Software-Anbieters
+;B006;Die niederländische Tribut-Rock-Band, die im Jahr 2013 mit klassischen Rock-Melodien aus den sechziger, siebziger und achtziger Jahren gegründet wurde
+;B003;Experimental Jazz Gruppe aus London, die viele musikalische Notizen zusammen in unerwarteten Kombinationen und Sequenzen spielt
+;B004;Verjüngte polnische Jungenband aus den 1990er Jahren - dieses Genre der Popmusik am zweifelhaftesten am besten
+;B002;A cappella singing group mit Sitz in München; Eine erhebende Mischung aus traditionellen und zeitgenössischen Liedern
+;B005;Enthusiastischer, lärmender Gospelchor singt traditionelle Gospel-Songs aus dem tiefen Süden
+;B007;Englisch Choralgesellschaft, spezialisiert auf wunderschön arrangierte, beruhigende Melodien und Lieder
+
+INSERT_UPDATE Player;code[unique=true];alias;band(code)
+;P001;JonK;B001
+;P002;Dennis;B001
+;P003;Mike Love;B001
+;P004;Jardine;B001
+;P005;Roger McGuinn;B002
+;P006;Byrds;B002
+;P007;Glenn Frey;B002
+
+INSERT_UPDATE Band;code[unique=true];ratingPerPlayer(key(code),value)[map-delimiter=|][key2value-delimiter=->]
+;B001;P001->298|P002->334|P003->887|P004->1931
+;B002;P005->2698|P006->874|P007->187
+
+INSERT_UPDATE Product;code[unique=true];$catalogVersion;varianttype(code);band(code);hashtag[lang=en];hashtag[lang=de]
+;CT001;;Concert;B001;yRockTour;yRockTour
+
+INSERT_UPDATE Concert;code[unique=true];$baseProduct;$catalogVersion;date[dateformat=dd.MM.yyyy];concertType(code);concertProgram(code);venue[lang=en];venue[lang=de]
+;CT001_1;CT001;;12.05.2021;indoor;CP001;Palace of the Republic;Palast der Republik
+;CT001_2;CT001;;23.08.2021;indoor;CP002;PrimeHall;PrimeHall
+
+INSERT_UPDATE Song;code[unique=true];name;date[dateformat=dd.MM.yyyy]
+;S001;Am I Savage?;11.01.2016
+;S002;Am I Evil?;18.04.1984
+;S003;...And Justice for All;24.09.1988
+;S004;Confusion;16.03.2016
+;S005;Devil's Dance;13.10.1997
+;S006;Disposable Heroes;08.07.1986
+;S007;Fight Fire with Fire;11.12.1984
+;S008;Hell and Back;03.11.2011
+;S009;Invisible Kid;19.12.2003
+;S010;Metal Militia;27.10.1983
+
+INSERT_UPDATE ConcertProgram;code[unique=true];songs(code);duration;concert(code)
+;CP001;S001,S003,S004,S007,S009,S010;60;CT001_1
+;CP002;S001,S002,S005,S006,S007,S008,S010;65;CT001_2
+
+INSERT_UPDATE ConcertProgram;code[unique=true];description[lang=en]
+;CP001;The main concept of the project: to show what the concerts of a cult rock band can be like after 30 years. Some of the songs will be performed by all participants together. Most of the material will be played as close to the original as possible, but it will not do without improvisation and new readings. High-quality sound and amazing stage production await all comers.
+;CP002;The band uses a variety of techniques in their songs: from flowing water to human bones, from reconstructed shields and swords to ancient tambourines and bronze rings. An integral part of this mystical performance is a ritual show that takes you to the astral plane to the all-consuming rhythms of shamanic and battle chants.
+
+INSERT_UPDATE ConcertProgram;code[unique=true];description[lang=de]
+;CP001;Das Hauptkonzept des Projekts: zu zeigen, wie die Konzerte einer Kult-Rockband nach 30 Jahren aussehen können. Einige der Songs werden von allen Teilnehmern zusammen aufgeführt. Das meiste Material wird so nah wie möglich am Original gespielt, aber es wird nicht ohne Improvisation und neue Lesarten auskommen. Hochwertiger Sound und eine erstaunliche Bühnenproduktion erwarten alle Ankömmlinge.
+;CP002;Die Band verwendet eine Vielzahl von Techniken in ihren Liedern: von fließendem Wasser bis zu menschlichen Knochen, von rekonstruierten Schilden und Schwertern bis zu alten Tamburinen und Bronzeringen. Ein wesentlicher Bestandteil dieser mystischen Aufführung ist eine rituelle Show, die Sie auf die Astralebene zu den alles verzehrenden Rhythmen schamanischer Gesänge und Kampfgesänge führt.

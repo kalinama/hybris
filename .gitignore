@@ -26,9 +26,15 @@ gensrc
 *.class
 *.project
 *.springBeans
+*.log
 *testclasses.xml
 platformhome.properties
 build.xml
 items.xsd
 beans.xsd
 extensioninfo.xsd
+
+# Intellij Idea
+.idea
+idea-module-files
+hybris4intellij.properties
