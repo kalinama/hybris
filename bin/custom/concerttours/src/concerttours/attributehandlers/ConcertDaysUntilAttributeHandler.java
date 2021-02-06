@@ -23,9 +23,4 @@ public class ConcertDaysUntilAttributeHandler extends AbstractDynamicAttributeHa
         final Duration duration = Duration.between(now, concertDate);
         return duration.toDays();
     }
-
-    @Override
-    public void set(ConcertModel model, Long aLong) {
-        throw new UnsupportedOperationException();
-    }
 }

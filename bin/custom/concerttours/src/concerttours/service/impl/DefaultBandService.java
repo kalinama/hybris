@@ -9,6 +9,10 @@ import org.springframework.beans.factory.annotation.Required;
 
 import java.util.List;
 
+import static de.hybris.platform.servicelayer.util.ServicesUtil.validateIfSingleResult;
+import static de.hybris.platform.servicelayer.util.ServicesUtil.validateParameterNotNull;
+import static java.lang.String.format;
+
 public class DefaultBandService implements BandService {
     private BandDAO bandDAO;
 
@@ -19,13 +23,12 @@ public class DefaultBandService implements BandService {
 
     @Override
     public BandModel getBandForCode(String code) throws UnknownIdentifierException, AmbiguousIdentifierException {
+        validateParameterNotNull(code, "Parameter code must not be null");
         List<BandModel> bands = bandDAO.findBandsByCode(code);
-        if (bands.size() == 0) {
-            throw new UnknownIdentifierException("Band with code '" + code + "' not found!");
-        }
-        if (bands.size() > 1) {
-            throw new AmbiguousIdentifierException("There are " + bands.size() + " bands found with code '" + code + "'");
-        }
+
+        validateIfSingleResult(bands, format("Band with code '%s' not found!", code),
+                format("Band code '%s' is not unique, %d bands found!", code, bands.size()));
+
         return bands.get(0);
     }
 
