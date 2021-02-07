@@ -81,6 +81,7 @@
                 <attribute qualifier="code" type="java.lang.String">
                     <description>short unique code of band</description>
                     <persistence type="property"/>
+                    <modifiers optional="false" unique="true"/>
                 </attribute>
                 <attribute qualifier="name" type="java.lang.String">
                     <description>name of band</description>
@@ -242,5 +243,18 @@
                   extends="CronJob"
                   autocreate="true"
                   generate="true"/>
+
+        <itemtype code="RatingForBandPlayersConstraint" extends="TypeConstraint"
+                  autocreate="true" generate="true">
+            <description>check if map contains only the rating of players of this band</description>
+            <attributes>
+                <attribute qualifier="annotation" type="java.lang.Class" redeclare="true">
+                    <modifiers write="false" initial="true" optional="false"/>
+                    <defaultvalue>
+                        concerttours.constraints.RatingForBandPlayers.class
+                    </defaultvalue>
+                </attribute>
+            </attributes>
+        </itemtype>
     </itemtypes>
 </items>
