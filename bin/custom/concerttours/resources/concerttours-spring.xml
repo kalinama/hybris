@@ -64,8 +64,10 @@
 
 
     <!-- populators -->
-    <bean id="bandPopulator" class="concerttours.populators.BandPopulator"/>
-    <bean id="bandTourPopulator" class="concerttours.populators.BandToursPopulator">
+    <bean id="bandPopulator" class="concerttours.populators.BandPopulator">
+        <property name="configurationService" ref="configurationService"/>
+    </bean>
+    <bean id="bandToursPopulator" class="concerttours.populators.BandToursPopulator">
         <property name="tourSummaryConverter" ref="tourSummaryConverter"/>
     </bean>
     <bean id="tourPopulator" class="concerttours.populators.TourPopulator"/>
@@ -83,7 +85,7 @@
         <property name="populators">
             <list merge="true">
                 <ref bean="bandPopulator"/>
-                <ref bean="bandTourPopulator"/>
+                <ref bean="bandToursPopulator"/>
             </list>
         </property>
     </bean>
