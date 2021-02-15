@@ -54,6 +54,10 @@
           class="concerttours.attributehandlers.BandPlayersInPopularityOrderAttributeHandler"/>
     <bean id="concertDaysUntilAttributeHandler"
           class="concerttours.attributehandlers.ConcertDaysUntilAttributeHandler"/>
+    <bean id="producerFullNameAttributeHandler"
+          class="concerttours.attributehandlers.ProducerFullNameAttributeHandler">
+        <property name="i18NService" ref="i18NService"/>
+    </bean>
 
     <bean id="concerttoursService" class="concerttours.service.impl.DefaultConcerttoursService">
         <!-- setter injection example -->

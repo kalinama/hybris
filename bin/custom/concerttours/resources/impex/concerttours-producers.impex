@@ -1,0 +1,5 @@
+INSERT_UPDATE Producer; code[unique = true]; name[lang = en]; surname[lang = en]; name[lang = ru]; surname[lang = ru]; experience
+                      ; PR001              ; An             ; Jo                ; Анна           ; Джо               ; 5
+                      ; PR002              ; Mike           ; Swon              ; Майк           ; Свон              ; 2
+                      ; PR003              ; Nick           ; Wilson            ; Ник            ; Вилсон            ; 10
+                      ; PR004              ; Kate           ; Taylor            ; Кэйт           ; Тэйлор            ; 7

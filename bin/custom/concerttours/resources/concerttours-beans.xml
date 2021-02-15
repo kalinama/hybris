@@ -44,6 +44,7 @@
         <property name="tourName" type="String"/>
         <property name="description" type="String"/>
         <property name="concerts" type="java.util.List&lt;concerttours.data.ConcertSummaryData&gt;"/>
+        <property name="producer" type="String"/>
     </bean>
     <bean class="concerttours.data.ConcertData">
         <description>Data object representing a concert</description>
@@ -56,5 +57,6 @@
         <property name="description" type="String"/>
         <property name="duration" type="Long"/>
         <property name="songs" type="java.util.List&lt;String&gt;"/>
+        <property name="producer" type="String"/>
     </bean>
 </beans>

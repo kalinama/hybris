@@ -3,3 +3,6 @@ INSERT_UPDATE MinConstraint; id[unique = true]                    ; severity(cod
 
 INSERT_UPDATE RatingForBandPlayersConstraint; id[unique = true]        ; severity(code, itemtype(code)); active; annotation                                    ; type(code); message[lang = ru]                                                                          ; message[lang = en]
                                             ; RatingForBandPlayersOnly ; ERROR:Severity                ; true  ; concerttours.constraints.RatingForBandPlayers ; Band      ; Только исполнители, относящиеся к данной группе, могут иметь рейтинг в пределах этой группы ; Only performers belonging to this group can be rated within this group
+
+INSERT_UPDATE MinConstraint; id[unique = true]                  ; severity(code, itemtype(code)); active; annotation                       ; descriptor(enclosingType(code), qualifier); message[lang = ru]                                         ; message[lang = en]                      ; value
+                           ; ProducerExperienceCanNotBeNegative ; ERROR:Severity                ; true  ; javax.validation.constraints.Min ; Producer:experience                       ; Стаж продюссера не может быть выражен отрицательным числом ; Producer experience can not be negative ; 0
