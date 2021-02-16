@@ -10,6 +10,7 @@
     <h2>Days before the concert: ${concert.daysUntil}</h2>
     <h3>Duration: ${concert.duration} minutes</h3>
     <h3>Venue: ${concert.venue} - ${concert.type}</h3>
+    <h3>Producer: ${concert.producer}</h3>
 
     <h4>${concert.description}</h4>
     <h4>Song list:</h4>

@@ -3,12 +3,14 @@ package concerttours.populators;
 import concerttours.data.ConcertData;
 import concerttours.model.ConcertModel;
 import concerttours.model.ConcertProgramModel;
+import concerttours.model.ProducerModel;
 import concerttours.model.SongModel;
 import de.hybris.platform.converters.Populator;
 import de.hybris.platform.servicelayer.dto.converter.ConversionException;
 import org.apache.commons.collections4.CollectionUtils;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class ConcertPopulator implements Populator<ConcertModel, ConcertData> {
@@ -30,5 +32,8 @@ public class ConcertPopulator implements Populator<ConcertModel, ConcertData> {
                 .map(SongModel::getName)
                 .collect(Collectors.toList());
         concertData.setSongs(songs);
+
+        Optional.ofNullable(concertModel.getBaseProduct().getProducer())
+                .ifPresent(producer -> concertData.setProducer(producer.getFullName()));
     }
 }
