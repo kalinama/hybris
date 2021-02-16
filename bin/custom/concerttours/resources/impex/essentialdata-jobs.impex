@@ -1,0 +1,7 @@
+# Define the cron job and the job that it wraps
+INSERT_UPDATE DailyNewsInfoGeneratingCronJob; code[unique = true]            ; job(code)              ; singleExecutable; sessionLanguage(isocode)
+                                            ; dailyNewsInfoGeneratingCronJob ; dailyNewsInfoGeneratingJob ; false           ; ru
+
+# Define the trigger that periodically invokes the cron job - every day at 12 pm
+INSERT_UPDATE Trigger; cronjob(code)[unique=true]  ; cronExpression
+                     ; dailyNewsInfoGeneratingCronJob ; 0 0 12 * * ?

@@ -18,9 +18,36 @@
 
     <context:component-scan base-package="concerttours"/>
 
+    <!-- jobs -->
+    <bean id="dailyNewsInfoGeneratingJob" class="concerttours.jobs.DailyNewsInfoGeneratingJob" parent="abstractJobPerformable">
+        <property name="newsService" ref="defaultNewsService"/>
+    </bean>
+    <!-- listeners -->
+    <bean id="newBandEventListener" class="concerttours.events.NewBandEventListener" parent="abstractEventListener">
+        <property name="modelService" ref="modelService"/>
+    </bean>
+    <bean id="bandAlbumSalesEventListener" class="concerttours.events.BandAlbumSalesEventListener"
+          parent="abstractEventListener">
+        <property name="modelService" ref="modelService"/>
+    </bean>
+
+    <!-- interceptors -->
+    <bean id="bandAlbumSalesInterceptor" class="concerttours.interceptors.BandAlbumSalesInterceptor">
+        <property name="eventService" ref="eventService"/>
+    </bean>
+    <bean id="bandAlbumSalesInterceptorMapping"
+          class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping">
+        <property name="interceptor" ref="bandAlbumSalesInterceptor"/>
+        <property name="typeCode" value="Band"/>
+    </bean>
+
+
     <bean id="concerttoursSystemSetup" class="concerttours.setup.ConcerttoursSystemSetup">
         <!-- constructor arg injection example -->
         <constructor-arg ref="concerttoursService"/>
+    </bean>
+    <bean id="concerttoursCustomSetup" class="concerttours.setup.ConcerttoursCustomSetup">
+        <property name="importService" ref="importService"/>
     </bean>
 
     <bean id="bandPlayersInPopularityOrderAttributeHandler"
@@ -35,13 +62,12 @@
         <property name="flexibleSearchService" ref="flexibleSearchService"/>
     </bean>
 
-    <bean id="concerttoursCustomSetup" class="concerttours.setup.ConcerttoursCustomSetup">
-        <property name="importService" ref="importService"/>
-    </bean>
 
     <!-- populators -->
-    <bean id="bandPopulator" class="concerttours.populators.BandPopulator"/>
-    <bean id="bandTourPopulator" class="concerttours.populators.BandToursPopulator">
+    <bean id="bandPopulator" class="concerttours.populators.BandPopulator">
+        <property name="configurationService" ref="configurationService"/>
+    </bean>
+    <bean id="bandToursPopulator" class="concerttours.populators.BandToursPopulator">
         <property name="tourSummaryConverter" ref="tourSummaryConverter"/>
     </bean>
     <bean id="tourPopulator" class="concerttours.populators.TourPopulator"/>
@@ -59,7 +85,7 @@
         <property name="populators">
             <list merge="true">
                 <ref bean="bandPopulator"/>
-                <ref bean="bandTourPopulator"/>
+                <ref bean="bandToursPopulator"/>
             </list>
         </property>
     </bean>
@@ -120,10 +146,18 @@
     <bean name="defaultBandService" class="concerttours.service.impl.DefaultBandService">
         <property name="bandDAO" ref="defaultBandDAO"/>
     </bean>
+    <alias name="defaultNewsService" alias="newsService"/>
+    <bean name="defaultNewsService" class="concerttours.service.impl.DefaultNewsService">
+        <property name="newsDAO" ref="defaultNewsDAO"/>
+    </bean>
 
     <!-- DAOs -->
     <alias name="defaultBandDAO" alias="bandDAO"/>
     <bean name="defaultBandDAO" class="concerttours.dao.impl.DefaultBandDAO">
+        <property name="flexibleSearchService" ref="defaultFlexibleSearchService"/>
+    </bean>
+    <alias name="defaultNewsDAO" alias="newsDAO"/>
+    <bean name="defaultNewsDAO" class="concerttours.dao.impl.DefaultNewsDAO">
         <property name="flexibleSearchService" ref="defaultFlexibleSearchService"/>
     </bean>
 
