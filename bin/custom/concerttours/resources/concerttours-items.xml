@@ -113,6 +113,10 @@
                     <modifiers read="true" write="false"/>
                     <persistence type="dynamic" attributeHandler="bandPlayersInPopularityOrderAttributeHandler"/>
                 </attribute>
+                <attribute qualifier="image" type="MediaContainer">
+                    <description>picture of band in different formats</description>
+                    <persistence type="property"/>
+                </attribute>
             </attributes>
         </itemtype>
 

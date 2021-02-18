@@ -74,6 +74,16 @@
     <bean id="bandToursPopulator" class="concerttours.populators.BandToursPopulator">
         <property name="tourSummaryConverter" ref="tourSummaryConverter"/>
     </bean>
+    <bean id="bandImageUrlForListFormatPopulator" class="concerttours.populators.BandImageUrlPopulator">
+        <property name="mediaService" ref="mediaService"/>
+        <property name="mediaContainerService" ref="mediaContainerService"/>
+        <property name="mediaFormatName" value="bandList"/>
+    </bean>
+    <bean id="bandImageUrlForDetailFormatPopulator" class="concerttours.populators.BandImageUrlPopulator">
+        <property name="mediaService" ref="mediaService"/>
+        <property name="mediaContainerService" ref="mediaContainerService"/>
+        <property name="mediaFormatName" value="bandDetail"/>
+    </bean>
     <bean id="tourPopulator" class="concerttours.populators.TourPopulator"/>
     <bean id="tourConcertsPopulator" class="concerttours.populators.TourConcertsPopulator">
         <property name="concertSummaryConverter" ref="concertSummaryConverter"/>
@@ -84,12 +94,23 @@
 
 
     <!-- converters -->
-    <bean id="bandConverter" parent="abstractPopulatingConverter">
+    <bean id="bandListConverter" parent="abstractPopulatingConverter">
         <property name="targetClass" value="concerttours.data.BandData"/>
         <property name="populators">
             <list merge="true">
                 <ref bean="bandPopulator"/>
                 <ref bean="bandToursPopulator"/>
+                <ref bean="bandImageUrlForListFormatPopulator"/>
+            </list>
+        </property>
+    </bean>
+    <bean id="bandDetailConverter" parent="abstractPopulatingConverter">
+        <property name="targetClass" value="concerttours.data.BandData"/>
+        <property name="populators">
+            <list merge="true">
+                <ref bean="bandPopulator"/>
+                <ref bean="bandToursPopulator"/>
+                <ref bean="bandImageUrlForDetailFormatPopulator"/>
             </list>
         </property>
     </bean>
@@ -132,7 +153,8 @@
     <alias name="defaultBandFacade" alias="bandFacade"/>
     <bean id="defaultBandFacade" class="concerttours.facades.impl.DefaultBandFacade">
         <property name="bandService" ref="defaultBandService"/>
-        <property name="bandConverter" ref="bandConverter"/>
+        <property name="bandDetailConverter" ref="bandDetailConverter"/>
+        <property name="bandListConverter" ref="bandListConverter"/>
     </bean>
     <alias name="defaultTourFacade" alias="tourFacade"/>
     <bean id="defaultTourFacade" class="concerttours.facades.impl.DefaultTourFacade">
