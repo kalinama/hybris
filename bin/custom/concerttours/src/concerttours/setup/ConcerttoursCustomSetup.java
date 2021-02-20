@@ -28,6 +28,7 @@ public class ConcerttoursCustomSetup {
     @SystemSetup(type = SystemSetup.Type.PROJECT)
     public boolean addProjectData() {
         LOG.info("Starting custom project data loading for the Concerttours extension");
+        impexImport("/impex/concerttours-catalogs.impex");
         impexImport("/impex/concerttours-bands.impex");
         impexImport("/impex/concerttours-producers.impex");
         impexImport("/impex/concerttours-yRockTour.impex");

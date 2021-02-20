@@ -209,7 +209,27 @@
 
         <itemtype code="News" autocreate="true" generate="true">
             <deployment table="News" typecode="10007"/>
+            <custom-properties>
+                <property name="catalogItemType">
+                    <value>java.lang.Boolean.TRUE</value>
+                </property>
+                <property name="catalogVersionAttributeQualifier">
+                    <value>"catalogVersion"</value>
+                </property>
+                <property name="uniqueKeyAttributeQualifier">
+                    <value>"code"</value>
+                </property>
+            </custom-properties>
             <attributes>
+                <attribute qualifier="code" type="java.lang.String">
+                    <description>short unique code of player</description>
+                    <persistence type="property"/>
+                    <modifiers unique="true" optional="false"/>
+                </attribute>
+                <attribute qualifier="catalogVersion" type="CatalogVersion">
+                    <modifiers optional="false"/>
+                    <persistence type="property"/>
+                </attribute>
                 <attribute qualifier="content" type="java.lang.String">
                     <description>fuller description of the news item</description>
                     <persistence type="property">

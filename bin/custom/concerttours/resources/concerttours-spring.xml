@@ -18,6 +18,14 @@
 
     <context:component-scan base-package="concerttours"/>
 
+    <bean id="newsCodeGenerator" class="de.hybris.platform.servicelayer.keygenerator.impl.PersistentKeyGenerator">
+        <property name="key" value="${keygen.news.code.name}"/>
+        <property name="digits" value="${keygen.news.code.digits}"/>
+        <property name="start" value="${keygen.news.code.start}"/>
+        <property name="type" value="${keygen.news.code.type}"/>
+        <property name="template" value="${keygen.news.code.template}"/>
+    </bean>
+
     <!-- jobs -->
     <bean id="dailyNewsInfoGeneratingJob" class="concerttours.jobs.DailyNewsInfoGeneratingJob" parent="abstractJobPerformable">
         <property name="newsService" ref="defaultNewsService"/>
@@ -25,10 +33,14 @@
     <!-- listeners -->
     <bean id="newBandEventListener" class="concerttours.events.NewBandEventListener" parent="abstractEventListener">
         <property name="modelService" ref="modelService"/>
+        <property name="keyGenerator" ref="newsCodeGenerator"/>
+        <property name="catalogVersionService" ref="catalogVersionService"/>
     </bean>
     <bean id="bandAlbumSalesEventListener" class="concerttours.events.BandAlbumSalesEventListener"
           parent="abstractEventListener">
         <property name="modelService" ref="modelService"/>
+        <property name="keyGenerator" ref="newsCodeGenerator"/>
+        <property name="catalogVersionService" ref="catalogVersionService"/>
     </bean>
 
     <!-- interceptors -->
