@@ -18,6 +18,14 @@
 
     <context:component-scan base-package="concerttours"/>
 
+    <bean id="newsCodeGenerator" class="de.hybris.platform.servicelayer.keygenerator.impl.PersistentKeyGenerator">
+        <property name="key" value="${keygen.news.code.name}"/>
+        <property name="digits" value="${keygen.news.code.digits}"/>
+        <property name="start" value="${keygen.news.code.start}"/>
+        <property name="type" value="${keygen.news.code.type}"/>
+        <property name="template" value="${keygen.news.code.template}"/>
+    </bean>
+
     <!-- jobs -->
     <bean id="dailyNewsInfoGeneratingJob" class="concerttours.jobs.DailyNewsInfoGeneratingJob" parent="abstractJobPerformable">
         <property name="newsService" ref="defaultNewsService"/>
@@ -25,10 +33,14 @@
     <!-- listeners -->
     <bean id="newBandEventListener" class="concerttours.events.NewBandEventListener" parent="abstractEventListener">
         <property name="modelService" ref="modelService"/>
+        <property name="keyGenerator" ref="newsCodeGenerator"/>
+        <property name="catalogVersionService" ref="catalogVersionService"/>
     </bean>
     <bean id="bandAlbumSalesEventListener" class="concerttours.events.BandAlbumSalesEventListener"
           parent="abstractEventListener">
         <property name="modelService" ref="modelService"/>
+        <property name="keyGenerator" ref="newsCodeGenerator"/>
+        <property name="catalogVersionService" ref="catalogVersionService"/>
     </bean>
 
     <!-- interceptors -->
@@ -74,6 +86,16 @@
     <bean id="bandToursPopulator" class="concerttours.populators.BandToursPopulator">
         <property name="tourSummaryConverter" ref="tourSummaryConverter"/>
     </bean>
+    <bean id="bandImageUrlForListFormatPopulator" class="concerttours.populators.BandImageUrlPopulator">
+        <property name="mediaService" ref="mediaService"/>
+        <property name="mediaContainerService" ref="mediaContainerService"/>
+        <property name="mediaFormatName" value="bandList"/>
+    </bean>
+    <bean id="bandImageUrlForDetailFormatPopulator" class="concerttours.populators.BandImageUrlPopulator">
+        <property name="mediaService" ref="mediaService"/>
+        <property name="mediaContainerService" ref="mediaContainerService"/>
+        <property name="mediaFormatName" value="bandDetail"/>
+    </bean>
     <bean id="tourPopulator" class="concerttours.populators.TourPopulator"/>
     <bean id="tourConcertsPopulator" class="concerttours.populators.TourConcertsPopulator">
         <property name="concertSummaryConverter" ref="concertSummaryConverter"/>
@@ -84,12 +106,23 @@
 
 
     <!-- converters -->
-    <bean id="bandConverter" parent="abstractPopulatingConverter">
+    <bean id="bandListConverter" parent="abstractPopulatingConverter">
         <property name="targetClass" value="concerttours.data.BandData"/>
         <property name="populators">
             <list merge="true">
                 <ref bean="bandPopulator"/>
                 <ref bean="bandToursPopulator"/>
+                <ref bean="bandImageUrlForListFormatPopulator"/>
+            </list>
+        </property>
+    </bean>
+    <bean id="bandDetailConverter" parent="abstractPopulatingConverter">
+        <property name="targetClass" value="concerttours.data.BandData"/>
+        <property name="populators">
+            <list merge="true">
+                <ref bean="bandPopulator"/>
+                <ref bean="bandToursPopulator"/>
+                <ref bean="bandImageUrlForDetailFormatPopulator"/>
             </list>
         </property>
     </bean>
@@ -132,7 +165,8 @@
     <alias name="defaultBandFacade" alias="bandFacade"/>
     <bean id="defaultBandFacade" class="concerttours.facades.impl.DefaultBandFacade">
         <property name="bandService" ref="defaultBandService"/>
-        <property name="bandConverter" ref="bandConverter"/>
+        <property name="bandDetailConverter" ref="bandDetailConverter"/>
+        <property name="bandListConverter" ref="bandListConverter"/>
     </bean>
     <alias name="defaultTourFacade" alias="tourFacade"/>
     <bean id="defaultTourFacade" class="concerttours.facades.impl.DefaultTourFacade">

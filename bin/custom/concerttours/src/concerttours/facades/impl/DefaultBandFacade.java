@@ -13,17 +13,18 @@ import java.util.List;
 public class DefaultBandFacade implements BandFacade {
 
     private BandService bandService;
-    private Converter<BandModel, BandData> bandConverter;
+    private Converter<BandModel, BandData> bandListConverter;
+    private Converter<BandModel, BandData> bandDetailConverter;
 
     @Override
     public BandData getBand(String id) throws IllegalArgumentException {
         BandModel bandModel = bandService.getBandForCode(id);
-        return bandConverter.convert(bandModel);
+        return bandDetailConverter.convert(bandModel);
     }
 
     @Override
     public List<BandData> getBands() {
-        return Converters.convertAll(bandService.getBands(), bandConverter);
+        return Converters.convertAll(bandService.getBands(), bandListConverter);
     }
 
     @Required
@@ -32,8 +33,12 @@ public class DefaultBandFacade implements BandFacade {
     }
 
     @Required
-    public void setBandConverter(Converter<BandModel, BandData> bandConverter) {
-        this.bandConverter = bandConverter;
+    public void setBandListConverter(Converter<BandModel, BandData> bandListConverter) {
+        this.bandListConverter = bandListConverter;
     }
 
+    @Required
+    public void setBandDetailConverter(Converter<BandModel, BandData> bandDetailConverter) {
+        this.bandDetailConverter = bandDetailConverter;
+    }
 }

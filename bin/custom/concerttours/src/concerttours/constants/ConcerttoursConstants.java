@@ -21,6 +21,8 @@ public final class ConcerttoursConstants extends GeneratedConcerttoursConstants
 	public static final String CATALOG_ID = "concertoursProductCatalog";
 	public static final String CATALOG_VERSION_NAME = "Online";
 
+	public static final String DEFAULT_BAND_IMAGE = "defaultBandImage";
+
 	private ConcerttoursConstants()
 	{
 		//empty to avoid instantiating this constant class
